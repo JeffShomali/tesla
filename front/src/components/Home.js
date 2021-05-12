@@ -10,49 +10,7 @@ const scripts = [
 let Controller
 
 class Home extends React.Component {
-  static get Controller() {
-    if (Controller) return Controller
-
-    try {
-      Controller = require('../controllers/IndexController')
-      Controller = Controller.default || Controller
-
-      return Controller
-    }
-    catch (e) {
-      if (e.code == 'MODULE_NOT_FOUND') {
-        Controller = Home
-
-        return Controller
-      }
-
-      throw e
-    }
-  }
-
-  componentDidMount() {
-    /* View has no WebFlow data attributes */
-
-    scripts.concat(null).reduce((active, next) => Promise.resolve(active).then((active) => {
-      const loading = active.loading.then((script) => {
-        new Function(`
-          with (this) {
-            eval(arguments[0])
-          }
-        `).call(window, script)
-
-        return next
-      })
-
-      return active.isAsync ? next : loading
-    }))
-  }
-
   render() {
-    const proxies = Home.Controller !== Home ? transformProxies(this.props.children) : {
-
-    }
-
     return (
       <span>
         <style dangerouslySetInnerHTML={{ __html: `

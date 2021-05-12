@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { createScope, map, transformProxies } from './helpers'
+import { Link } from 'react-router-dom'
 
 import AuthService from "../services/auth.service";
 
@@ -95,7 +96,9 @@ class Dashboard extends React.Component {
                   <div className="af-class-card-left-column-40">
                     <h4 className="af-class-dashbiard-card-tiltle">Model Y</h4>
                     <p className="af-class-paragraph-2">RN114787313<br /></p>
-                    <a href="#" className="af-class-card-button w-button">Manage</a>
+                    <Link to={"/home"} className="af-class-card-button w-button">
+                      Manage
+                    </Link>
                   </div>
                   <div className="af-class-card-right-column-60">
                     <img src="images/compositor.png" loading="lazy" width={350} height={180} srcSet="images/compositor-p-500.png 500w, images/compositor-p-800.png 800w, images/compositor-p-1080.png 1080w, images/compositor.png 1440w" sizes="(max-width: 767px) 59vw, 350px" alt />

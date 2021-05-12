@@ -1,6 +1,14 @@
 ## Cloning Tesla Authentication and Dashboard
 
- This is a fun project for warming up my upcoming interview with Tesla. This is a cloning Tesla.com login and dashboard. I used my account as reference and build the UI and backend.
+ This is a fun project for warming up my upcoming interview with Tesla. This is a cloning Tesla.com website that handle login authentication and dashboard. I used my account as reference and build the UI and backend.
+
+ **Front End Technology**: React, React-DOM, React-scripts, React-validation, Validator, Axios. 
+ **Back End Technology**: bcryptjs, body-parser, cors, express, jsonwebtoken, mysql2, sequelize.
+
+
+**Result**
+
+![alt](result.gif)
 
 **Roadmap**
  - [ ] Front End 
@@ -8,8 +16,13 @@
    - [x] Sign Up Page
    - [x] Dashboard  Page
    - [x] Delivery Status Page
+   - [ ] Form Validation and Error Handling
+   - [ ] Reusability and Modulation
+   - [ ] Fix the Checkbox
    - [ ] Profile Page
    - [ ] Testing(Jest)
+
+
 
 ### Run The project 
 **Backend** 
