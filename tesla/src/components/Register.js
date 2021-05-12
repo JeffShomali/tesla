@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { createScope, map, transformProxies } from './helpers'
+import {Link} from 'react-router-dom';
 
 const scripts = [
 
@@ -9,7 +10,7 @@ const scripts = [
 
 let Controller
 
-class SignupView extends React.Component {
+class Signup extends React.Component {
   static get Controller() {
     if (Controller) return Controller
 
@@ -21,7 +22,7 @@ class SignupView extends React.Component {
     }
     catch (e) {
       if (e.code == 'MODULE_NOT_FOUND') {
-        Controller = SignupView
+        Controller = Signup
 
         return Controller
       }
@@ -49,7 +50,7 @@ class SignupView extends React.Component {
   }
 
   render() {
-    const proxies = SignupView.Controller !== SignupView ? transformProxies(this.props.children) : {
+    const proxies = Signup.Controller !== Signup ? transformProxies(this.props.children) : {
 
     }
 
@@ -99,7 +100,9 @@ class SignupView extends React.Component {
                       <div className="af-class-text-block-4">OR</div>
                       <div className="af-class-horizontal-devider" />
                     </div>
-                    <a href="signup.html" className="af-class-create-account-button w-button w--current">Create account</a>
+                    <Link  to={"/login"} className="af-class-create-account-button w-button w--current">
+                      Sign In
+                    </Link>
                   </form>
                   <div className="w-form-done">
                     <div>Thank you! Your submission has been received!</div>
@@ -122,6 +125,6 @@ class SignupView extends React.Component {
   }
 }
 
-export default SignupView
+export default Signup
 
 /* eslint-enable */

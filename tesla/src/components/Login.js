@@ -11,7 +11,7 @@ const scripts = [
 
 let Controller
 
-class LoginView extends React.Component {
+class Login extends React.Component {
   static get Controller() {
     if (Controller) return Controller
 
@@ -23,7 +23,7 @@ class LoginView extends React.Component {
     }
     catch (e) {
       if (e.code == 'MODULE_NOT_FOUND') {
-        Controller = LoginView
+        Controller = Login
 
         return Controller
       }
@@ -51,7 +51,7 @@ class LoginView extends React.Component {
   }
 
   render() {
-    const proxies = LoginView.Controller !== LoginView ? transformProxies(this.props.children) : {
+    const proxies = Login.Controller !== Login ? transformProxies(this.props.children) : {
 
     }
 
@@ -95,7 +95,9 @@ class LoginView extends React.Component {
                     <div className="af-class-text-block-4">OR</div>
                     <div className="af-class-horizontal-devider" />
                   </div>
-                  <a href="signup.html" className="af-class-create-account-button w-button">Create account</a>
+                  <Link to={"/register" } className="af-class-create-account-button w-button">
+                    Create account
+                  </Link>
                 </div>
               </div>
             </div>
@@ -111,6 +113,6 @@ class LoginView extends React.Component {
   }
 }
 
-export default LoginView
+export default Login
 
 /* eslint-enable */

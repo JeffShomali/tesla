@@ -9,7 +9,7 @@ const scripts = [
 
 let Controller
 
-class IndexView extends React.Component {
+class Home extends React.Component {
   static get Controller() {
     if (Controller) return Controller
 
@@ -21,7 +21,7 @@ class IndexView extends React.Component {
     }
     catch (e) {
       if (e.code == 'MODULE_NOT_FOUND') {
-        Controller = IndexView
+        Controller = Home
 
         return Controller
       }
@@ -49,7 +49,7 @@ class IndexView extends React.Component {
   }
 
   render() {
-    const proxies = IndexView.Controller !== IndexView ? transformProxies(this.props.children) : {
+    const proxies = Home.Controller !== Home ? transformProxies(this.props.children) : {
 
     }
 
@@ -63,7 +63,8 @@ class IndexView extends React.Component {
           <div className="af-class-body">
             <div className="af-class-nav">
               <div className="af-class-nav-wrapper w-row">
-                <div className="af-class-logo-wrapper w-col w-col-2"><img src="images/logo.png" loading="lazy" width={102} height={18} srcSet="images/logo-p-500.png 500w, images/logo-p-800.png 800w, images/logo-p-1080.png 1080w, images/logo-p-1600.png 1600w, images/logo.png 2400w" sizes="102px" alt className="af-class-image" /></div>
+                <div className="af-class-logo-wrapper w-col w-col-2">
+                <img src="images/logo.png" loading="lazy" width={102} height={18}  alt className="af-class-image" /></div>
                 <div className="af-class-nav-item-wrapper w-col w-col-6">
                   <div className="af-class-div-block">
                     <a href="#" className="af-class-nav-item-text">model s</a>
@@ -74,7 +75,7 @@ class IndexView extends React.Component {
                   </div>
                 </div>
                 <div className="af-class-nav-right-column-wrapper w-col w-col-4">
-                  <a href="#" className="af-class-nav-item-text">SHop</a>
+                  <a href="#" className="af-class-nav-item-text">Shop</a>
                   <a href="#" className="af-class-nav-item-text">tesla account</a>
                   <a href="#" className="af-class-nav-item-text">log out</a>
                 </div>
@@ -198,6 +199,6 @@ class IndexView extends React.Component {
   }
 }
 
-export default IndexView
+export default Home
 
 /* eslint-enable */
