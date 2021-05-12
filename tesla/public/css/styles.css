@@ -917,7 +917,8 @@
   margin-bottom: 0px;
   padding-bottom: 0px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.35);
-  color: #817d7d;
+  font-weight: 400;
+  color: #00000077;
   text-align: right;
   text-decoration: none;
   white-space: normal;

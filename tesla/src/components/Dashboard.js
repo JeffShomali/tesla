@@ -69,7 +69,7 @@ class Dashboard extends React.Component {
                 <div className="af-class-user-status-right-itemm">
                   <div className="af-class-right-block-item">Home</div>
                   <div className="af-class-right-block-item">Account</div>
-                  <div className="af-class-right-block-item">Sign Out</div>
+                  <a href="/login" className="af-class-right-block-item">Sign Out</a>
                 </div>
               </div>
               <div className="af-class-card">
