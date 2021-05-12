@@ -3,56 +3,35 @@
 import React from 'react'
 import { createScope, map, transformProxies } from './helpers'
 
-const scripts = [
+import AuthService from "../services/auth.service";
 
-]
 
-let Controller
+class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.logOut = this.logOut.bind(this);
 
-class DashboardView extends React.Component {
-  static get Controller() {
-    if (Controller) return Controller
-
-    try {
-      Controller = require('../controllers/DashboardController')
-      Controller = Controller.default || Controller
-
-      return Controller
-    }
-    catch (e) {
-      if (e.code == 'MODULE_NOT_FOUND') {
-        Controller = DashboardView
-
-        return Controller
-      }
-
-      throw e
-    }
+    this.state = {
+      currentUser: undefined,
+    };
   }
 
   componentDidMount() {
-    /* View has no WebFlow data attributes */
+    const user = AuthService.getCurrentUser();
 
-    scripts.concat(null).reduce((active, next) => Promise.resolve(active).then((active) => {
-      const loading = active.loading.then((script) => {
-        new Function(`
-          with (this) {
-            eval(arguments[0])
-          }
-        `).call(window, script)
+    if (user) {
+      this.setState({
+        currentUser: user,
+        
+      });
+    }
+  }
 
-        return next
-      })
-
-      return active.isAsync ? next : loading
-    }))
+  logOut() {
+    AuthService.logout();
   }
 
   render() {
-    const proxies = DashboardView.Controller !== DashboardView ? transformProxies(this.props.children) : {
-
-    }
-
     return (
       <span>
         <style dangerouslySetInnerHTML={{ __html: `
@@ -78,7 +57,7 @@ class DashboardView extends React.Component {
                 <div className="af-class-nav-right-column-wrapper w-col w-col-4">
                   <a href="#" className="af-class-nav-item-text">SHop</a>
                   <a href="#" className="af-class-nav-item-text">tesla account</a>
-                  <a href="#" className="af-class-nav-item-text">log out</a>
+                  <a href="/login" className="af-class-nav-item-text" onClick={this.logOut} >log out</a>
                 </div>
               </div>
             </div>
@@ -151,6 +130,6 @@ class DashboardView extends React.Component {
   }
 }
 
-export default DashboardView
+export default Dashboard
 
 /* eslint-enable */
