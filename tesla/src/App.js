@@ -1,10 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
+import {DashboardView, IndexView, LoginView, SignupView} from './views/index'
 
 function App() {
   return (
     <div className="App">
-      <h1>App Page</h1>
+      <IndexView />
     </div>
   );
 }
