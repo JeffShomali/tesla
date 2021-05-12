@@ -1,60 +1,103 @@
 /* eslint-disable */
+/**
+* This page has a Form with username & password.
+* We’re gonna verify them as required field.
+* If the verification is ok, we call AuthService.login() method, then direct user to Profile page: this.props.history.push("/profile");, or show message with response error.
+*/
 
-import React from 'react'
+import React, { Component } from "react";
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
+
+import AuthService from "../services/auth.service";
+
 import {Link} from 'react-router-dom'
 import { createScope, map, transformProxies } from './helpers'
 
 
-const scripts = [
+// const scripts = [
 
-]
+// ]
 
-let Controller
+// let Controller
 
-class Login extends React.Component {
-  static get Controller() {
-    if (Controller) return Controller
+const required = value => {
+  if (!value) {
+    return (
+      <div className="w-form-fail" role="alert">
+        This field is required!
+      </div>
+    );
+  }
+};
 
-    try {
-      Controller = require('../controllers/LoginController')
-      Controller = Controller.default || Controller
 
-      return Controller
-    }
-    catch (e) {
-      if (e.code == 'MODULE_NOT_FOUND') {
-        Controller = Login
+class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
 
-        return Controller
-      }
-
-      throw e
-    }
+    this.state = {
+      username: "",
+      password: "",
+      loading: false,
+      message: ""
+    };
   }
 
-  componentDidMount() {
-    /* View has no WebFlow data attributes */
+  onChangeUsername(e) {
+    this.setState({
+      username: e.target.value
+    });
+  }
 
-    scripts.concat(null).reduce((active, next) => Promise.resolve(active).then((active) => {
-      const loading = active.loading.then((script) => {
-        new Function(`
-          with (this) {
-            eval(arguments[0])
-          }
-        `).call(window, script)
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value
+    });
+  }
 
-        return next
-      })
+  handleLogin(e) {
+    e.preventDefault();
 
-      return active.isAsync ? next : loading
-    }))
+    this.setState({
+      message: "",
+      loading: true
+    });
+
+    this.form.validateAll();
+
+    if (this.checkBtn.context._errors.length === 0) {
+      AuthService.login(this.state.username, this.state.password).then(
+        () => {
+          this.props.history.push("/dashboard");
+          window.location.reload();
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          this.setState({
+            loading: false,
+            message: resMessage
+          });
+        }
+      );
+    } else {
+      this.setState({
+        loading: false
+      });
+    }
   }
 
   render() {
-    const proxies = Login.Controller !== Login ? transformProxies(this.props.children) : {
-
-    }
-
     return (
       <span>
         <style dangerouslySetInnerHTML={{ __html: `
@@ -71,20 +114,51 @@ class Login extends React.Component {
             <div className="af-class-section">
               <div className="af-class-login-container w-container">
                 <div className="af-class-login-form w-form">
-                  <form id="email-form" name="email-form" className="af-class-form">
+                <Form onSubmit={this.handleLogin} ref={c => { this.form = c; }}>
+                  
                     <h2 className="af-class-form-header">Sign In</h2>
-                    <label htmlFor="name" className="af-class-form-label">Email Address</label>
-                    <input type="text" className="af-class-form-text-field w-input" maxLength={256} name="name" placeholder />
-                    <label htmlFor="email" className="af-class-form-label">Password</label>
-                    <input type="email" className="af-class-form-text-field w-input" maxLength={256} name="email" placeholder />
-                    <input type="submit" defaultValue="Sign in" className="af-class-form-submit-button w-button" />
-                  </form>
-                  <div className="w-form-done">
-                    <div className="af-class-text-block-3">Thank you! Your submission has been received!</div>
-                  </div>
-                  <div className="w-form-fail">
-                    <div>Oops! Something went wrong while submitting the form.</div>
-                  </div>
+                    <label htmlFor="username" className="af-class-form-label">Email Address</label>
+                    <Input 
+                    type="text"
+                    className="af-class-form-text-field w-input"
+                    name="username"
+                    value={this.state.username}
+                    onChange={this.onChangeUsername}
+                    validations={[required]}
+                    />
+                    
+                    <label htmlFor="password" className="af-class-form-label">Password</label>
+                    <Input 
+                      type="password"
+                      className="af-class-form-text-field w-input"
+                      name="password" 
+                      value={ this.state.password}
+                      onChange={this.onChangePassword}
+                      validations={[required]}
+                    />
+                    
+                    <button
+                      className="af-class-form-submit-button w-button"
+                      disabled={this.state.loading}
+                      >
+                      <span>SUBMIT</span>
+                    </button>
+
+                    <CheckButton
+                      style={{ display: "none" }}
+                      ref={c => {
+                        this.checkBtn = c;
+                      }}
+                    />
+                  
+                  </Form>
+                  
+                  {this.state.message && (
+                    <div className="w-form-fail">
+                        <div>{this.state.message}</div>
+                    </div>
+                  )}
+
                   <div className="af-class-forget-pass-block">
                     <a href="#" className="af-class-text-link">Forget email?</a>
                     <div className="af-class-divider" />
